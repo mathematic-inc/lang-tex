@@ -1,2 +1,3 @@
 # lang-tex
- TeX Extension for CodeMirror 6
+
+This is the TeX extension for CodeMirror 6. 

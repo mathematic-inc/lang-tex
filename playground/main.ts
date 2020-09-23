@@ -1,3 +1,4 @@
+import { autocompletion } from "@codemirror/next/autocomplete";
 import { closeBrackets } from "@codemirror/next/closebrackets";
 import { standardKeymap } from "@codemirror/next/commands";
 import { commentKeymap } from "@codemirror/next/comment";
@@ -7,8 +8,9 @@ import { history, historyKeymap } from "@codemirror/next/history";
 import { bracketMatching } from "@codemirror/next/matchbrackets";
 import { EditorState } from "@codemirror/next/state";
 import { EditorView, keymap } from "@codemirror/next/view";
+import { mathjaxSnippets } from "../src/autocomplete";
 import { TeXTagSystem } from "../src/highlight";
-import { tex } from "../src/tex";
+import { texSyntax } from "../src/tex";
 
 const defaultStyles = {
   deleted: { textDecoration: "line-through" },
@@ -28,7 +30,23 @@ const defaultStyles = {
   "propertyName definition": { color: "#00c" },
   comment: { color: "#940" },
   meta: { color: "#555" }
-}
+};
+
+const newStyles = {
+  "atom, bool": { color: "rgb(0, 92, 197)" },
+  docString: { color: "rgb(3, 47, 98)" },
+  comment: { color: "rgb(106, 115, 125)" },
+  invalid: {
+    backgroundColor: "#f00",
+    color: "white!important",
+    padding: "1px 2px"
+  },
+  "variableName definition": { color: "rgb(111, 66, 193)" },
+  variableName: { color: "#e36209" },
+  operator: { color: "#d73a49" },
+  namespace: { color: "#28a745", textDecoration: "underline" },
+  keyword: { color: "rgb(0, 92, 197)" }
+};
 
 const test = `
 \\documentclass[12pt]{article}
@@ -43,9 +61,8 @@ const test = `
 \\begin{document}
 \\maketitle
 \\\\
-\\ 
 \\&
-&
+\\0
 \\csname test \\endcsname
 \\textit{This is italic}
 \\textbf{This is boldface}
@@ -58,7 +75,11 @@ const test = `
     }
   }
 }
-
+\\verb|test|
+% This is a comment
+\\begin{test}
+This is a test
+\\end{testt}
 Welcome to LaTeX Base, a web-based \\LaTeX{} editor with live document preview!
 Here are some things to try --
 
@@ -90,6 +111,8 @@ out our service and don't hesitate to get in touch at
 \\end{document}
 `;
 
+const syntax = texSyntax();
+
 let startState = EditorState.create({
   doc: test,
   extensions: [
@@ -101,15 +124,22 @@ let startState = EditorState.create({
     // Extensions
     history(),
     highlightActiveLine(),
-    tex(),
-    TeXTagSystem.highlighter(Object.assign(defaultStyles, {
-      namespace: { color: "red" },
-      underline: { textDecoration: "underline" },
-      semistrong: { fontWeight: "500"},
-      noemphasis: { fontStyle: "normal" },
-      normal: { fontStyle: "unset", fontWeight: "unset", fontVariant: "unset!important" },
-      smallcap: { fontVariant: "small-caps" },
-    })),
+    syntax,
+    autocompletion(),
+    syntax.languageData.of({ autocomplete: mathjaxSnippets }),
+    TeXTagSystem.highlighter(
+      Object.assign(defaultStyles, newStyles, {
+        underline: { textDecoration: "underline" },
+        semistrong: { fontWeight: "500" },
+        noemphasis: { fontStyle: "normal" },
+        normal: {
+          fontStyle: "unset",
+          fontWeight: "unset",
+          fontVariant: "unset!important"
+        },
+        smallcap: { fontVariant: "small-caps" }
+      })
+    ),
     closeBrackets(),
     bracketMatching(),
     foldGutter()

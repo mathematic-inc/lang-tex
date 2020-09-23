@@ -6,7 +6,7 @@ const customFlags = [
   "smallcap",
   "underline",
   "normal"
-]
+];
 
 /**
  * The TeX tag system is based on the default one. We attempt to stay as close as possible to default tags, only straying away when required.

@@ -8,9 +8,7 @@ import { history, historyKeymap } from "@codemirror/next/history";
 import { bracketMatching } from "@codemirror/next/matchbrackets";
 import { EditorState } from "@codemirror/next/state";
 import { EditorView, keymap } from "@codemirror/next/view";
-import { mathjaxSnippets } from "../src/autocomplete";
-import { TeXTagSystem } from "../src/highlight";
-import { texSyntax } from "../src/tex";
+import { mathjaxSnippets, texSyntax, TeXTagSystem } from "../dist";
 
 const defaultStyles = {
   deleted: { textDecoration: "line-through" },

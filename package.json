@@ -2,22 +2,37 @@
   "name": "lang-tex",
   "version": "0.0.0",
   "description": "",
-  "main": "webpack.config.js",
+  "main": "dist/index.js",
+  "module": "dist/index.es.js",
+  "exports":{
+    
+  },
   "dependencies": {
-    "lezer-tex": "0.0.0-5"
+    "lezer-tex": "0.0.0-5",
+    "@codemirror/next": "^0.12.0"
+  },
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mu-io/lang-tex"
   },
   "devDependencies": {
-    "@codemirror/next": "^0.12.0",
+    "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-typescript": "^6.0.0",
+    "clean-webpack-plugin": "^3.0.0",
+    "html-webpack-plugin": "^4.5.0",
+    "rollup": "^2.28.1",
     "ts-loader": "^8.0.4",
     "typescript": "^4.0.3",
     "webpack": "^4.44.2",
     "webpack-cli": "^3.3.12",
-    "webpack-dev-server": "^3.11.0",
-    "clean-webpack-plugin": "^3.0.0",
-    "html-webpack-plugin": "^4.5.0"
+    "webpack-dev-server": "^3.11.0"
   },
   "scripts": {
-    "start": "webpack-dev-server"
+    "start": "webpack-dev-server",
+    "build": "rm -r dist && rollup -c"
   },
   "author": "",
   "license": "ISC"

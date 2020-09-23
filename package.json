@@ -1,12 +1,15 @@
 {
   "name": "lang-tex",
-  "version": "0.0.0",
-  "description": "",
+  "version": "0.0.1",
+  "description": "TeX extension for CodeMirror 6",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
-  "exports":{
-    
+  "exports": {
+    "import": "./dist/index.es.js",
+    "require": "./dist/index.js"
   },
+  "type": "module",
+  "types": "dist/index.d.ts",
   "dependencies": {
     "lezer-tex": "0.0.0-5",
     "@codemirror/next": "^0.12.0"
@@ -34,6 +37,6 @@
     "start": "webpack-dev-server",
     "build": "rm -r dist && rollup -c"
   },
-  "author": "",
-  "license": "ISC"
+  "author": "mu.io <dev@mathematic.io>",
+  "license": "MIT"
 }

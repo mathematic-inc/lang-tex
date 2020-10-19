@@ -8,7 +8,7 @@ import { history, historyKeymap } from "@codemirror/next/history";
 import { bracketMatching } from "@codemirror/next/matchbrackets";
 import { EditorState } from "@codemirror/next/state";
 import { EditorView, keymap } from "@codemirror/next/view";
-import { mathjaxSnippets, texLightTheme, texSyntax, TeXTagSystem } from "../dist";
+import { mathjaxSnippets, texLightTheme, texSyntax } from "../dist";
 
 const test = `
 \\documentclass[12pt]{article}
@@ -92,11 +92,11 @@ let startState = EditorState.create({
     texLightTheme,
     closeBrackets(),
     bracketMatching(),
-    foldGutter()
-  ]
+    foldGutter(),
+  ],
 });
 
 new EditorView({
   state: startState,
-  parent: document.body
+  parent: document.body,
 });
